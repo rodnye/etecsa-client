@@ -1,4 +1,4 @@
-import { requestEtecsaApi } from '../core/api';
+import { requestEtecsaApi } from '../../core/api';
 import type {
   LoadHomePageData,
   LoadPackages,
@@ -9,7 +9,7 @@ import type {
   LoadAdditionalPlans,
   LoadOffersAndPromotions,
   LoadFrequentQuestions,
-} from './shop.types';
+} from './types';
 
 export interface PageDataRequest {
   operation: string;

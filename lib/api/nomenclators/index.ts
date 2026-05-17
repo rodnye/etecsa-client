@@ -1,10 +1,10 @@
-import { requestEtecsaApi } from '../core/api';
+import { requestEtecsaApi } from '../../core/api';
 import {
   MunicipalitiesResponse,
   NautaInterruptionsResponse,
   ProvincesResponse,
   StbInterruption,
-} from './nomenclators.types';
+} from './types';
 
 export const nomenclatorsApi = {
   loadNautaInterruptions: async () =>
