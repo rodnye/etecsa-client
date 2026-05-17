@@ -1,8 +1,95 @@
-import { requestEtecsaApi } from "../../core/api";
-import { AuthCredentials, AuthResponse } from "./types";
-import { validateUserFormat, detectUserFormat } from "./utils";
+import { requestEtecsaApi } from '../../core/api';
+import { AuthCredentials, AuthResponse } from './types';
+import { validateUserFormat, detectUserFormat } from './utils';
 
-export const loginAuthApi = async (credentials: AuthCredentials): Promise<AuthResponse> => {
+/**
+ * Verificar si un usuario existe en el sistema ETECSA
+ */
+export const checkUserExistsAuthApi = async (
+  user: string,
+): Promise<{
+  success: boolean;
+  status: number;
+  exists?: boolean;
+  error?: string;
+  message?: string;
+}> => {
+  const userFormat = detectUserFormat(user);
+  if (!validateUserFormat(user, userFormat)) {
+    return {
+      success: false,
+      status: 400,
+      error: 'invalid_format',
+      message: 'Formato de usuario incorrecto',
+    };
+  }
+
+  try {
+    const response = await requestEtecsaApi<{ existe: boolean }, any>(
+      '/autenticarse/autenticarse_api',
+      {
+        method: 'post',
+        data: {
+          operacion: 'verificar_usuario',
+          tipo_usuario: userFormat === 'phone' ? 'celular' : 'correo',
+          usuario: user,
+        },
+      },
+    );
+
+    if (response.status === 204) {
+      return {
+        success: false,
+        status: 204,
+        exists: false,
+        error: 'user_not_found',
+        message:
+          userFormat === 'phone'
+            ? 'El teléfono móvil no está registrado en el sistema'
+            : 'El correo electrónico no está registrado en el sistema',
+      };
+    }
+
+    if (response.status === 200) {
+      if (response.data.existe) {
+        return {
+          success: false,
+          status: 200,
+          exists: true,
+          error: 'too_many_attempts',
+          message:
+            userFormat === 'phone'
+              ? 'Ha superado el número de intentos para un día con ese número móvil'
+              : 'Ha superado el número de intentos para un día con ese correo electrónico',
+        };
+      }
+      return {
+        success: true,
+        status: 200,
+        exists: false,
+      };
+    }
+
+    return {
+      success: false,
+      status: response.status,
+      error: 'server_error',
+      message: 'Ocurrió un error al verificar el usuario',
+    };
+  } catch (error) {
+    console.error('Verify user error:', error);
+    return {
+      success: false,
+      status: 500,
+      error: 'server_error',
+      message: 'Ocurrió un error al conectar con el servidor',
+    };
+  }
+};
+
+export const loginAuthApi = async (
+  credentials: AuthCredentials,
+): Promise<AuthResponse> => {
   if (!validateUserFormat(credentials.user, detectUserFormat(credentials.user)))
     throw new Error('Formato de usuario incorrecto');
 
