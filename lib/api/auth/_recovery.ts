@@ -1,4 +1,5 @@
 import { requestEtecsaApi } from '../../core/api';
+import { ApiResponse } from '../../core/types';
 import { detectUserFormat, validateUserFormat } from './utils';
 
 /**
@@ -6,13 +7,7 @@ import { detectUserFormat, validateUserFormat } from './utils';
  */
 export const generateCodeAuthApi = async (
   user: string,
-): Promise<{
-  success: boolean;
-  status: number;
-  error?: string;
-  message?: string;
-  tooManyAttempts?: boolean;
-}> => {
+): Promise<ApiResponse> => {
   const userFormat = detectUserFormat(user);
   if (!validateUserFormat(user, userFormat)) {
     return {
@@ -41,7 +36,6 @@ export const generateCodeAuthApi = async (
         return {
           success: false,
           status: 200,
-          tooManyAttempts: true,
           error: 'too_many_attempts',
           message: 'Ha superado la cantidad de intentos (3)',
         };
@@ -79,13 +73,7 @@ export const generateCodeAuthApi = async (
 export const verifyCodeAuthApi = async (
   user: string,
   code: string,
-): Promise<{
-  success: boolean;
-  status: number;
-  error?: string;
-  message?: string;
-  maxAttemptsReached?: boolean;
-}> => {
+): Promise<ApiResponse> => {
   try {
     const response = await requestEtecsaApi<boolean, any>(
       '/autenticarse/autenticarse_api',
@@ -113,7 +101,6 @@ export const verifyCodeAuthApi = async (
         status: 200,
         error: 'too_many_attempts',
         message: 'Ha superado la cantidad de intentos (3)',
-        maxAttemptsReached: true,
       };
     }
 
@@ -140,12 +127,7 @@ export const verifyCodeAuthApi = async (
 export const resetPasswordAuthApi = async (
   user: string,
   newPassword: string,
-): Promise<{
-  success: boolean;
-  status: number;
-  error?: string;
-  message?: string;
-}> => {
+): Promise<ApiResponse> => {
   try {
     const response = await requestEtecsaApi<null, any>(
       '/autenticarse/autenticarse_api',

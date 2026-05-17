@@ -1,4 +1,5 @@
 import { requestEtecsaApi } from '../../core/api';
+import { ApiResponse } from '../../core/types';
 import { AuthCredentials, AuthResponse } from './types';
 import { validateUserFormat, detectUserFormat } from './utils';
 
@@ -7,13 +8,15 @@ import { validateUserFormat, detectUserFormat } from './utils';
  */
 export const checkUserExistsAuthApi = async (
   user: string,
-): Promise<{
-  success: boolean;
-  status: number;
-  exists?: boolean;
-  error?: string;
-  message?: string;
-}> => {
+): Promise<
+  ApiResponse & {
+    error?:
+      | 'user_not_found'
+      | 'too_many_attempts'
+      | 'invalid_format'
+      | 'server_error';
+  }
+> => {
   const userFormat = detectUserFormat(user);
   if (!validateUserFormat(user, userFormat)) {
     return {
@@ -41,7 +44,6 @@ export const checkUserExistsAuthApi = async (
       return {
         success: false,
         status: 204,
-        exists: false,
         error: 'user_not_found',
         message:
           userFormat === 'phone'
@@ -55,7 +57,6 @@ export const checkUserExistsAuthApi = async (
         return {
           success: false,
           status: 200,
-          exists: true,
           error: 'too_many_attempts',
           message:
             userFormat === 'phone'
@@ -66,7 +67,6 @@ export const checkUserExistsAuthApi = async (
       return {
         success: true,
         status: 200,
-        exists: false,
       };
     }
 
@@ -114,6 +114,7 @@ export const loginAuthApi = async (
 
       return {
         success: true,
+        status: 200,
         cookies: {
           csrfToken,
           sessionId,
@@ -124,6 +125,7 @@ export const loginAuthApi = async (
     if (response.status === 203) {
       return {
         success: false,
+        status: 203,
         error: 'invalid_credentials',
         message: 'Usuario o contraseña incorrectos',
       };
@@ -132,6 +134,7 @@ export const loginAuthApi = async (
     if (response.status === 226) {
       return {
         success: false,
+        status: 226,
         error: 'too_many_attempts',
         message:
           'Ha superado el límite de 3 intentos fallidos. Por favor verifique sus datos e inténtelo nuevamente en 30 minutos.',
@@ -140,6 +143,7 @@ export const loginAuthApi = async (
 
     return {
       success: false,
+      status: 500,
       error: 'server_error',
       message: 'Ocurrió un error durante la autenticación',
     };
@@ -147,6 +151,7 @@ export const loginAuthApi = async (
     console.error('Auth error:', error);
     return {
       success: false,
+      status: 500,
       error: 'server_error',
       message: 'Ocurrió un error al conectar con el servidor',
     };
