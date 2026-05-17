@@ -75,7 +75,6 @@ export const generateCodeAuthApi = async (
 
 /**
  * Verificar código de validación enviado al usuario
- * Equivalente a operacion: 'verificar_codigo'
  */
 export const verifyCodeAuthApi = async (
   user: string,
