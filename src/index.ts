@@ -3,8 +3,10 @@ import { profileApi } from "./api/profile";
 import { mobileApi } from "./api/mobile";
 import { nomenclatorsApi } from "./api/nomenclators";
 import { pageApi } from "./api/page";
+import { init } from "./core/methods";
 
 export const etecsa = {
+  init,
   auth: authApi,
   profile: profileApi,
   mobile: mobileApi,
