@@ -1,5 +1,54 @@
 import { ApiResponse } from '../../core/types';
 
+export interface ProfileUser {
+  id: number;
+  tipo_usuario: boolean;
+  nombre: string;
+  primer_apellido: string;
+  segundo_apellido: string;
+  carnet: string;
+  tipoci: number;
+  provincia: number;
+  municipio: number;
+  sexo: number;
+  direccion: string;
+  movil: string;
+  email: string;
+  post_pago: boolean;
+}
+
+export interface ProfileServiceItem {
+  key: number;
+  value: string;
+}
+
+export interface ProfileServices {
+  moviles: ProfileServiceItem[];
+  fijos: unknown[];
+  nauta: unknown[];
+  nauta_hogar: unknown[];
+  nauta_correo: unknown[];
+}
+
+export interface ProfileMunicipio {
+  id: number;
+  name: string;
+  provincia_id: number;
+  municipalitie_dpa: string;
+  store_code_name: string;
+}
+
+export interface ProfileData {
+  usuario: ProfileUser;
+  beneficiarios: unknown[];
+  servicios: ProfileServices;
+  municipios: ProfileMunicipio[];
+}
+
+export interface ProfileResponse extends ApiResponse {
+  data?: ProfileData;
+}
+
 /**
  * Respuesta de get_id_cajeros
  */
@@ -24,11 +73,6 @@ export type NautaHogarResponse = unknown;
  * Respuesta de get_servicios_moviles
  */
 export type GetMobileServicesResponse = unknown;
-
-/**
- * Respuesta del perfil completo (GET)
- */
-export type ProfileResponse = unknown;
 
 /**
  * Beneficiario

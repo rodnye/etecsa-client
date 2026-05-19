@@ -8,6 +8,7 @@ import {
   GetMobileServicesResponse,
   GetOwnCardResponse,
   NautaHogarResponse,
+  ProfileData,
   ProfileResponse,
 } from './types';
 
@@ -458,9 +459,9 @@ export const profileApi = {
   /**
    * Obtener perfil completo del usuario
    */
-  getProfile: async (): Promise<ApiResponse & { data?: ProfileResponse }> => {
+  getProfile: async (): Promise<ProfileResponse> => {
     try {
-      const response = await requestEtecsaApi<ProfileResponse, any>(
+      const response = await requestEtecsaApi<ProfileData, any>(
         '/usuarios/perfil_api',
         {
           method: 'get',
