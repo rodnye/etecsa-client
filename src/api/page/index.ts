@@ -27,36 +27,36 @@ const postPageData = async <R = unknown>(
   });
 };
 
-export const pageDataApi = {
-  loadHomePageData: (): Promise<ApiResult<LoadHomePageData>> =>
+export const pageApi = {
+  home: (): Promise<ApiResult<LoadHomePageData>> =>
     postPageData<LoadHomePageData>({
       operation: 'cargar_datos_pagina_principal',
     }),
 
-  loadPackages: (): Promise<ApiResult<LoadPackages>> =>
+  packages: (): Promise<ApiResult<LoadPackages>> =>
     postPageData<LoadPackages>({ operation: 'cargar_paquetes' }),
 
-  loadPlans: (): Promise<ApiResult<LoadPlans>> =>
-    postPageData<LoadPlans>({ operation: 'cargar_planes' }),
-
-  loadBags: (): Promise<ApiResult<LoadBags>> =>
+  bags: (): Promise<ApiResult<LoadBags>> =>
     postPageData<LoadBags>({ operation: 'cargar_bolsas' }),
 
-  loadBag: (): Promise<ApiResult<LoadBag>> =>
+  bag: (): Promise<ApiResult<LoadBag>> =>
     postPageData<LoadBag>({ operation: 'cargar_bolsa' }),
 
-  loadSpecialPlans: (): Promise<ApiResult<LoadSpecialPlans>> =>
+  plans: (): Promise<ApiResult<LoadPlans>> =>
+    postPageData<LoadPlans>({ operation: 'cargar_planes' }),
+
+  specialPlans: (): Promise<ApiResult<LoadSpecialPlans>> =>
     postPageData<LoadSpecialPlans>({ operation: 'cargar_planes_especial' }),
 
-  loadAdditionalPlans: (): Promise<ApiResult<LoadAdditionalPlans>> =>
+  additionalPlans: (): Promise<ApiResult<LoadAdditionalPlans>> =>
     postPageData<LoadAdditionalPlans>({ operation: 'cargar_planes_adicional' }),
 
-  loadOffersAndPromotions: (): Promise<ApiResult<LoadOffersAndPromotions>> =>
+  offers: (): Promise<ApiResult<LoadOffersAndPromotions>> =>
     postPageData<LoadOffersAndPromotions>({
       operation: 'cargar_ofertas_promociones',
     }),
 
-  loadFrequentQuestions: (): Promise<ApiResult<LoadFrequentQuestions>> =>
+  faq: (): Promise<ApiResult<LoadFrequentQuestions>> =>
     postPageData<LoadFrequentQuestions>({
       operation: 'cargar_preguntas_frecuentes',
     }),

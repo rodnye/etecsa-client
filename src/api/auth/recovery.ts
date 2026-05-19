@@ -5,7 +5,7 @@ import { detectUserFormat, validateUserFormat } from './utils';
  * Generar y enviar código de verificación al usuario
  * TODO: untested
  */
-export const generateCodeAuthApi = async (
+export const sendCode = async (
   user: string,
 ): Promise<ApiResult<{ message: string }>> => {
   const userFormat = detectUserFormat(user);
@@ -73,7 +73,7 @@ export const generateCodeAuthApi = async (
  * Verificar código de validación enviado al usuario
  * TODO: untested
  */
-export const verifyCodeAuthApi = async (
+export const verifyCode = async (
   user: string,
   code: string,
 ): Promise<ApiResult<{ message: string }>> => {
@@ -128,7 +128,7 @@ export const verifyCodeAuthApi = async (
  * Recuperar/restablecer contraseña
  * FIXME: error 401
  */
-export const resetPasswordAuthApi = async (
+export const resetPassword = async (
   user: string,
   newPassword: string,
 ): Promise<ApiResult<{ message: string }>> => {

@@ -54,9 +54,108 @@ async function profileRequest<T>(
 }
 
 export const profileApi = {
-  getMobileServices: (): Promise<ApiResult<GetMobileServicesResponse>> =>
+  me: (): Promise<ApiResult<ProfileData>> =>
+    profileRequest<ProfileData>({
+      method: 'get',
+    }),
+
+  mobileServices: (): Promise<ApiResult<GetMobileServicesResponse>> =>
     profileRequest<GetMobileServicesResponse>({
       operation: 'get_servicios_moviles',
+    }),
+
+  /**
+   * TODO: untested
+   */
+  edit: async (
+    data: EditUserRequest,
+  ): Promise<ApiResult<{ message: string }>> => {
+    const result = await requestEtecsaApi<unknown>('/usuarios/perfil_api', {
+      method: 'put',
+      data: {
+        operacion: 'editar_usuario',
+        ...data,
+      },
+    });
+
+    if (!result.ok) {
+      return result;
+    }
+
+    const { status } = result;
+
+    if (status === 226) {
+      const errorMessage = result.data as string;
+      let errorKey:
+        | 'carnet'
+        | 'carnet_con_movil'
+        | 'carnet_con_correo'
+        | undefined;
+      if (errorMessage === 'carnet') errorKey = 'carnet';
+      else if (errorMessage === 'carnet_con_movil')
+        errorKey = 'carnet_con_movil';
+      else if (errorMessage === 'carnet_con_correo')
+        errorKey = 'carnet_con_correo';
+
+      return {
+        ok: false,
+        error: 'Error de validación',
+        status: 226,
+        details: { code: 'validation_error', errorKey },
+      };
+    }
+
+    if (status === 200) {
+      return {
+        ok: true,
+        data: { message: 'Perfil editado correctamente' },
+        status: 200,
+      };
+    }
+
+    return {
+      ok: false,
+      error: 'Ocurrió un error',
+      status,
+      details: { code: 'server_error' },
+    };
+  },
+
+  logout: async (): Promise<ApiResult<{ message: string }>> => {
+    const result = await profileRequest<null>({
+      operation: 'cerrar_session',
+      method: 'put',
+    });
+
+    if (!result.ok) {
+      return result;
+    }
+
+    return {
+      ok: true,
+      data: { message: 'Sesión cerrada correctamente' },
+      status: result.status,
+    };
+  },
+
+  nautaHogar: (): Promise<ApiResult<NautaHogarResponse>> =>
+    profileRequest<NautaHogarResponse>({
+      operation: 'get_nauta_hogar',
+    }),
+
+  cashiersIds: (): Promise<ApiResult<CashiersResponse>> =>
+    profileRequest<CashiersResponse>({
+      operation: 'get_id_cajeros',
+    }),
+
+  ownCard: (): Promise<ApiResult<GetOwnCardResponse>> =>
+    profileRequest<GetOwnCardResponse>({
+      operation: 'get_tarjeta_propia',
+    }),
+
+  landlineServices: (): Promise<ApiResult<GetLandlineServicesResponse>> =>
+    profileRequest<GetLandlineServicesResponse>({
+      operation: 'get_servicios_fijos',
     }),
 
   /**
@@ -252,103 +351,4 @@ export const profileApi = {
       details: { code: 'server_error' },
     };
   },
-
-  getProfile: (): Promise<ApiResult<ProfileData>> =>
-    profileRequest<ProfileData>({
-      method: 'get',
-    }),
-
-  logout: async (): Promise<ApiResult<{ message: string }>> => {
-    const result = await profileRequest<null>({
-      operation: 'cerrar_session',
-      method: 'put',
-    });
-
-    if (!result.ok) {
-      return result;
-    }
-
-    return {
-      ok: true,
-      data: { message: 'Sesión cerrada correctamente' },
-      status: result.status,
-    };
-  },
-
-  /**
-   * TODO: untested
-   */
-  editUser: async (
-    data: EditUserRequest,
-  ): Promise<ApiResult<{ message: string }>> => {
-    const result = await requestEtecsaApi<unknown>('/usuarios/perfil_api', {
-      method: 'put',
-      data: {
-        operacion: 'editar_usuario',
-        ...data,
-      },
-    });
-
-    if (!result.ok) {
-      return result;
-    }
-
-    const { status } = result;
-
-    if (status === 226) {
-      const errorMessage = result.data as string;
-      let errorKey:
-        | 'carnet'
-        | 'carnet_con_movil'
-        | 'carnet_con_correo'
-        | undefined;
-      if (errorMessage === 'carnet') errorKey = 'carnet';
-      else if (errorMessage === 'carnet_con_movil')
-        errorKey = 'carnet_con_movil';
-      else if (errorMessage === 'carnet_con_correo')
-        errorKey = 'carnet_con_correo';
-
-      return {
-        ok: false,
-        error: 'Error de validación',
-        status: 226,
-        details: { code: 'validation_error', errorKey },
-      };
-    }
-
-    if (status === 200) {
-      return {
-        ok: true,
-        data: { message: 'Perfil editado correctamente' },
-        status: 200,
-      };
-    }
-
-    return {
-      ok: false,
-      error: 'Ocurrió un error',
-      status,
-      details: { code: 'server_error' },
-    };
-  },
-
-  getNautaHogar: (): Promise<ApiResult<NautaHogarResponse>> =>
-    profileRequest<NautaHogarResponse>({
-      operation: 'get_nauta_hogar',
-    }),
-
-  getCashiersIds: (): Promise<ApiResult<CashiersResponse>> =>
-    profileRequest<CashiersResponse>({
-      operation: 'get_id_cajeros',
-    }),
-
-  getOwnCard: (): Promise<ApiResult<GetOwnCardResponse>> =>
-    profileRequest<GetOwnCardResponse>({
-      operation: 'get_tarjeta_propia',
-    }),
-
-  getLandlineServices: (): Promise<ApiResult<GetLandlineServicesResponse>> =>
-    profileRequest<GetLandlineServicesResponse>({
-      operation: 'get_servicios_fijos',
-    }),
 };

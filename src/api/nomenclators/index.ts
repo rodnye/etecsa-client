@@ -7,18 +7,12 @@ import {
 } from './types';
 
 export const nomenclatorsApi = {
-  loadNautaInterruptions: (): Promise<ApiResult<NautaInterruptionsResponse>> =>
-    requestEtecsaApi<NautaInterruptionsResponse>(
-      '/nomencladores/nom_interr_nauta_api',
-      { method: 'get' },
-    ),
-
-  loadStbInterruptions: (): Promise<ApiResult<StbInterruption>> =>
-    requestEtecsaApi<StbInterruption>('/nomencladores/nom_interr_stb_api', {
+  provinces: (): Promise<ApiResult<ProvincesResponse>> =>
+    requestEtecsaApi<ProvincesResponse>('/nomencladores/nom_provincias_api', {
       method: 'get',
     }),
 
-  loadMunicipalities: (
+  municipalities: (
     provinceId: number,
   ): Promise<ApiResult<MunicipalitiesResponse>> =>
     requestEtecsaApi<MunicipalitiesResponse>(
@@ -32,8 +26,14 @@ export const nomenclatorsApi = {
       },
     ),
 
-  loadProvinces: (): Promise<ApiResult<ProvincesResponse>> =>
-    requestEtecsaApi<ProvincesResponse>('/nomencladores/nom_provincias_api', {
+  nautaInterruptions: (): Promise<ApiResult<NautaInterruptionsResponse>> =>
+    requestEtecsaApi<NautaInterruptionsResponse>(
+      '/nomencladores/nom_interr_nauta_api',
+      { method: 'get' },
+    ),
+
+  stbInterruptions: (): Promise<ApiResult<StbInterruption>> =>
+    requestEtecsaApi<StbInterruption>('/nomencladores/nom_interr_stb_api', {
       method: 'get',
     }),
 };

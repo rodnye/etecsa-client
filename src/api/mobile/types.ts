@@ -147,4 +147,8 @@ export interface SimDataServiceStatus {
 export type GetServiceStatusResponse =
   | PrepaidServiceStatus
   | PostpaidServiceStatus
-  | SimDataServiceStatus;
+  | SimDataServiceStatus;export type MobileServiceRequestOptions = {
+  operation: string;
+  data?: Record<string, unknown>;
+};
+
