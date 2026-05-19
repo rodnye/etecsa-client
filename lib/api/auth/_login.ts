@@ -1,4 +1,5 @@
 import { requestEtecsaApi } from '../../core/api';
+import { ETECSA } from '../../core/methods';
 import { ApiResponse } from '../../core/types';
 import { AuthCredentials, AuthResponse } from './types';
 import { validateUserFormat, detectUserFormat } from './utils';
@@ -107,10 +108,11 @@ export const loginAuthApi = async (
     );
 
     if (response.status === 200) {
-      const cookies = response.headers['set-cookie'];
-      // FIXME: check this, this not get the cookies
-      const csrfToken = cookies?.find((c) => c.startsWith('csrftoken='))!;
-      const sessionId = cookies?.find((c) => c.startsWith('sessionid='))!;
+      const cookies = ETECSA.cookiesJar.getCookiesSync(ETECSA.href);
+
+      console.debug('Cookies of session setted successful');
+      const csrfToken = cookies?.find((c) => c.key === 'csrftoken')!;
+      const sessionId = cookies?.find((c) => c.key === 'sessionid')!;
 
       return {
         success: true,
