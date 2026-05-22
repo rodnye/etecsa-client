@@ -6,7 +6,8 @@ Permite autenticación, consulta de servicios móviles, gestión de perfil, nome
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-> [¿Cómo funciona?](./HOW.md)
+> - [¿Para qué es esto?](./docs/WHY.md)
+> - [¿Cómo funciona?](./docs/HOW.md)
 
 ## Características
 
@@ -17,18 +18,6 @@ Permite autenticación, consulta de servicios móviles, gestión de perfil, nome
 - **Páginas públicas** – Obtener paquetes, planes, ofertas, preguntas frecuentes.
 - **Manejo robusto de errores** – Errores tipados con códigos específicos.
 - **TypeScript** – Tipos completos incluidos tanto de las solicitudes como de las respuestas.
-
-## 📦 Instalación
-
-```bash
-npm install etecsa-client
-# o con pnpm
-pnpm add etecsa-client
-```
-
-**Requisito:** Node.js **v18 o superior**.
-
----
 
 ## 🚀 Uso rápido
 
