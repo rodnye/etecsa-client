@@ -65,14 +65,14 @@ const beforeParseForReact = (window: DOMWindow) => {
       matches: false,
       media: query,
       onchange: null,
-      addListener: () => { },
-      removeListener: () => { },
-      addEventListener: () => { },
-      removeEventListener: () => { },
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
       dispatchEvent: () => false,
     }),
   });
-  Object.defineProperty(window, 'scrollTo', { value: () => { } });
+  Object.defineProperty(window, 'scrollTo', { value: () => {} });
   Object.defineProperty(window, 'requestAnimationFrame', {
     value: (cb: FrameRequestCallback) => {
       setTimeout(16).then(() => cb(Date.now()));

@@ -18,49 +18,63 @@ Permite autenticación, consulta de servicios móviles, gestión de perfil, nome
 - **Páginas públicas** – Obtener paquetes, planes, ofertas, preguntas frecuentes.
 - **Manejo robusto de errores** – Errores tipados con códigos específicos.
 - **TypeScript** – Tipos completos incluidos tanto de las solicitudes como de las respuestas.
+- **Múltiples instancias** – Soporta múltiples clientes independientes con sus propias sesiones.
 
 ## 🚀 Uso rápido
 
 ```typescript
-import { etecsa } from 'etecsa-client';
+import { EtecsaClient } from 'etecsa-client';
 
-// 1. Inicializar el cliente (solo una vez)
-await etecsa.init();
+// 1. Crear instancia del cliente
+const client = new EtecsaClient();
 
-// 2. Iniciar sesión
-await etecsa.auth.login({
+// 2. Inicializar el cliente (solo una vez por instancia)
+await client.init();
+
+// 3. Iniciar sesión
+await client.auth.login({
   user: '+53 5555555',
   pass: 'tu_contraseña',
 });
 
-// 3. Obtener datos del perfil
-const perfil = await etecsa.profile.me();
+// 4. Obtener datos del perfil
+const perfil = await client.profile.me();
 console.log(perfil.usuario.nombre);
 
-// 4. Consultar estado de un servicio móvil
-const estadoMovil = await etecsa.mobile.status();
+// 5. Consultar estado de un servicio móvil
+const estadoMovil = await client.mobile.status();
 console.log(`Saldo: ${estadoMovil.balance}`);
 
-// 5. Cerrar sesión
-await etecsa.auth.logout();
+// 6. Cerrar sesión
+await client.auth.logout();
 ```
 
 ---
 
 ## 📚 API Principal
 
-### `etecsa.init()`
+### `new EtecsaClient()`
 
-Debe llamarse **una sola vez** antes de cualquier otra operación.  
-Carga el entorno virtual y prepara los métodos de comunicación.
+Crea una nueva instancia del cliente. Cada instancia mantiene su propia sesión y cookies independientes.
 
 ```typescript
-await etecsa.init();
+const client = new EtecsaClient();
 ```
 
 ---
 
-### 🔐 `etecsa.auth` – Autenticación
+### `client.init()`
+
+Debe llamarse **una sola vez** por instancia antes de cualquier otra operación.  
+Carga el entorno virtual y prepara los métodos de comunicación.
+
+```typescript
+await client.init();
+```
+
+---
+
+### 🔐 `client.auth` – Autenticación
 
 | Método                         | Descripción                                             |
 | ------------------------------ | ------------------------------------------------------- |
@@ -76,16 +90,16 @@ await etecsa.init();
 **Ejemplo completo de recuperación:**
 
 ```typescript
-await etecsa.auth.sendCode('+53 55555555');
+await client.auth.sendCode('+53 55555555');
 
 // chequear el código de confirmación recibido
-await etecsa.auth.verifyCode('+53 55555555', '123456');
-await etecsa.auth.resetPassword('+53 55555555', 'nuevaPass123');
+await client.auth.verifyCode('+53 55555555', '123456');
+await client.auth.resetPassword('+53 55555555', 'nuevaPass123');
 ```
 
 ---
 
-### 👤 `etecsa.profile` – Perfil de usuario
+### 👤 `client.profile` – Perfil de usuario
 
 | Método                            | Descripción                                   |
 | --------------------------------- | --------------------------------------------- |
@@ -102,7 +116,7 @@ await etecsa.auth.resetPassword('+53 55555555', 'nuevaPass123');
 
 ---
 
-### 📱 `etecsa.mobile` – Servicios móviles
+### 📱 `client.mobile` – Servicios móviles
 
 | Método             | Descripción                                 |
 | ------------------ | ------------------------------------------- |
@@ -113,10 +127,10 @@ Puedes pasar `{ service, ci, typeci, sendSms }` para consultar una línea espec�
 
 ```typescript
 // Usar el primer servicio del perfil
-const estado = await etecsa.mobile.status();
+const estado = await client.mobile.status();
 
 // Consultar línea específica
-const estado2 = await etecsa.mobile.status({
+const estado2 = await client.mobile.status({
   service: '+53 55555555',
   sendSms: false,
 });
@@ -124,7 +138,7 @@ const estado2 = await etecsa.mobile.status({
 
 ---
 
-### 🗺️ `etecsa.nom` – Nomencladores
+### 🗺️ `client.nom` – Nomencladores
 
 | Método                       | Descripción                        |
 | ---------------------------- | ---------------------------------- |
@@ -135,7 +149,7 @@ const estado2 = await etecsa.mobile.status({
 
 ---
 
-### 🌐 `etecsa.page` – Datos públicos
+### 🌐 `client.page` – Datos públicos
 
 | Método              | Descripción                                                   |
 | ------------------- | ------------------------------------------------------------- |
@@ -143,6 +157,7 @@ const estado2 = await etecsa.mobile.status({
 | `packages()`        | Paquetes de datos disponibles.                                |
 | `plans()`           | Planes de telefonía.                                          |
 | `bags()`            | Bolsas de datos.                                              |
+| `bag()`             | Detalles de una bolsa específica.                             |
 | `specialPlans()`    | Planes especiales.                                            |
 | `additionalPlans()` | Planes adicionales.                                           |
 | `offers()`          | Ofertas y promociones.                                        |
@@ -155,10 +170,13 @@ const estado2 = await etecsa.mobile.status({
 Todos los errores de API lanzan una instancia de `EtecsaApiError`:
 
 ```typescript
-import { etecsa, EtecsaApiError } from 'etecsa-client';
+import { EtecsaClient, EtecsaApiError } from 'etecsa-client';
+
+const client = new EtecsaClient();
+await client.init();
 
 try {
-  await etecsa.auth.login({ user: 'invalido', pass: 'xxx' });
+  await client.auth.login({ user: 'invalido', pass: 'xxx' });
 } catch (error) {
   if (error instanceof EtecsaApiError) {
     console.error(`Error ${error.status}: ${error.message}`);
@@ -179,14 +197,39 @@ try {
 
 ## Persistencia de sesión
 
-Puedes guardar las cookies después de `login()` y restaurarlas después:
+Puedes guardar las cookies después de `login()` y restaurarlas en otra instancia:
 
 ```typescript
+const client = new EtecsaClient();
+await client.init();
+await client.auth.login({ user: 'x', pass: 'y' });
+
 // Guardar después de login
-const cookiesGuardadas = etecsa.auth.save();
+const cookiesGuardadas = client.auth.save();
 
 // En otra ejecución
-await etecsa.init();
-await etecsa.auth.load(cookiesGuardadas);
+const newClient = new EtecsaClient();
+await newClient.init();
+await newClient.auth.load(cookiesGuardadas);
 // Ahora la sesión sigue activa
+```
+
+---
+
+## Múltiples instancias
+
+Puedes crear múltiples clientes independientes para manejar diferentes cuentas:
+
+```typescript
+const client1 = new EtecsaClient();
+const client2 = new EtecsaClient();
+
+await Promise.all([client1.init(), client2.init()]);
+
+await client1.auth.login({ user: 'usuario1@nauta.cu', pass: '***' });
+await client2.auth.login({ user: 'usuario2@nauta.cu', pass: '***' });
+
+// Cada cliente tiene su propia sesión
+const perfil1 = await client1.profile.me();
+const perfil2 = await client2.profile.me();
 ```
