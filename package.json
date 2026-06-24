@@ -44,6 +44,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "prepublishOnly": "pnpm run clean && pnpm run build",
+    "format": "prettier --write .",
     "test": "echo \"No tests yet\""
   },
   "packageManager": "pnpm@10.33.2",
