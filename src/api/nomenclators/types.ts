@@ -21,10 +21,10 @@ export interface Municipality {
   id: number;
   name: string;
   provincia_id: number;
-  
+
   /** Código DPA (División Político-Administrativa) del municipio */
   municipalitie_dpa: string;
-  
+
   /**
    * Lista de tiendas/oficinas comerciales en el municipio.
    * Formato: "codigo_tienda,Nombre Tienda|codigo_tienda,Nombre Tienda|..."

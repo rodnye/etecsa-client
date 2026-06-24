@@ -1,22 +1,9 @@
-import { authApi } from "./api/auth";
-import { profileApi } from "./api/profile";
-import { mobileApi } from "./api/mobile";
-import { nomenclatorsApi } from "./api/nomenclators";
-import { pageApi } from "./api/page";
-import { init } from "./core/methods";
-
-export const etecsa = {
-  init,
-  auth: authApi,
-  profile: profileApi,
-  mobile: mobileApi,
-  nom: nomenclatorsApi,
-  page: pageApi,
-}
-
+export { EtecsaClient } from './client';
+export type { EtecsaClientContext } from './client';
+export { EtecsaApiError } from './core/api';
 export * from './api/auth/types';
 export * from './api/mobile/types';
 export * from './api/profile/types';
-export { EtecsaApiError } from './core/api';
 
-export default etecsa;
+import { EtecsaClient } from './client';
+export default EtecsaClient;

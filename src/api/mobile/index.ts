@@ -1,5 +1,6 @@
-import { getMobileServiceStatus } from './status';
+import type { EtecsaClientContext } from '../../client';
+import { createGetMobileServiceStatus } from './status';
 
-export const mobileApi = {
-  status: getMobileServiceStatus,
-}
+export const createMobileApi = (context: EtecsaClientContext) => ({
+  status: createGetMobileServiceStatus(context),
+});

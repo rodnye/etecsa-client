@@ -1,33 +1,39 @@
-import { DOMWindow, JSDOM, VirtualConsole } from 'jsdom';
+import { JSDOM, VirtualConsole, CookieJar } from 'jsdom';
 import express from 'express';
 import path from 'path';
 import { Server } from 'http';
 import { setTimeout } from 'timers/promises';
-import { LIB_FOLDER, OFFLINE_SERVER_PORT } from '../consts';
+import { readFileSync } from 'fs';
+import { DOMWindow } from 'jsdom';
+import { LIB_FOLDER } from '../consts';
+import { AddressInfo } from 'node:net';
+
+const RAW_DIR = path.join(LIB_FOLDER, '../raw');
 
 /**
  *
  */
-export const loadVirtualDOM = async () => {
-  // create virtual console
+export const loadVirtualDOM = async (): Promise<{
+  window: JSDOM['window'];
+  cookieJar: CookieJar;
+}> => {
   const virtualConsole = new VirtualConsole();
   virtualConsole.on('jsdomError', (err) => {
     console.error('JSDOM Error:', err.message);
   });
 
-  // serve offline scripts
+  // Start express server on a random port
+  const app = express();
+  app.use(express.static(RAW_DIR));
   const server = await new Promise<Server>((resolve) => {
-    const app = express();
-
-    app.use(express.static(path.join(LIB_FOLDER, '../raw')));
-
-    const server = app.listen(OFFLINE_SERVER_PORT, () => {
-      resolve(server);
-    });
+    const srv = app.listen(0, () => resolve(srv));
   });
+  const port = (server.address() as AddressInfo).port;
 
-  // load virtual dom
-  const dom = await JSDOM.fromFile(path.join(LIB_FOLDER, '../raw/index.html'), {
+  let htmlContent = readFileSync(path.join(RAW_DIR, 'index.html'), 'utf-8');
+  htmlContent = htmlContent.replace(/localhost:3256/g, `localhost:${port}`);
+
+  const dom = new JSDOM(htmlContent, {
     resources: 'usable',
     url: 'https://www.tienda.etecsa.cu/visitantes/home',
     runScripts: 'dangerously',
@@ -45,7 +51,7 @@ export const loadVirtualDOM = async () => {
   // stop server
   await new Promise((resolve) => server.close(resolve));
 
-  return dom;
+  return { window: dom.window, cookieJar: dom.cookieJar };
 };
 
 /**
@@ -59,16 +65,14 @@ const beforeParseForReact = (window: DOMWindow) => {
       matches: false,
       media: query,
       onchange: null,
-      addListener: () => {},
-      removeListener: () => {},
-      addEventListener: () => {},
-      removeEventListener: () => {},
+      addListener: () => { },
+      removeListener: () => { },
+      addEventListener: () => { },
+      removeEventListener: () => { },
       dispatchEvent: () => false,
     }),
   });
-  Object.defineProperty(window, 'scrollTo', {
-    value: () => {},
-  });
+  Object.defineProperty(window, 'scrollTo', { value: () => { } });
   Object.defineProperty(window, 'requestAnimationFrame', {
     value: (cb: FrameRequestCallback) => {
       setTimeout(16).then(() => cb(Date.now()));

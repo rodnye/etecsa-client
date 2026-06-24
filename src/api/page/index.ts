@@ -1,3 +1,4 @@
+import type { EtecsaClientContext } from '../../client';
 import { requestEtecsaApi } from '../../core/api';
 import type {
   LoadHomePageData,
@@ -11,51 +12,30 @@ import type {
   LoadFrequentQuestions,
 } from './types';
 
-export interface PageDataRequest {
-  operation: string;
-  securityValidationUrl?: string;
-}
-
-const postPageData = async <R = unknown>(data: PageDataRequest): Promise<R> => {
-  return requestEtecsaApi<R>('/tienda_admin/datos_pagina_api', {
+const postPageData = async <R = unknown>(
+  context: EtecsaClientContext,
+  operation: string,
+): Promise<R> => {
+  return requestEtecsaApi<R>(context, '/tienda_admin/datos_pagina_api', {
     method: 'post',
-    data: {
-      operacion: data.operation,
-    },
+    data: { operacion: operation },
   });
 };
 
-export const pageApi = {
+export const createPageApi = (context: EtecsaClientContext) => ({
   home: (): Promise<LoadHomePageData> =>
-    postPageData<LoadHomePageData>({
-      operation: 'cargar_datos_pagina_principal',
-    }),
-
+    postPageData(context, 'cargar_datos_pagina_principal'),
   packages: (): Promise<LoadPackages> =>
-    postPageData<LoadPackages>({ operation: 'cargar_paquetes' }),
-
-  bags: (): Promise<LoadBags> =>
-    postPageData<LoadBags>({ operation: 'cargar_bolsas' }),
-
-  bag: (): Promise<LoadBag> =>
-    postPageData<LoadBag>({ operation: 'cargar_bolsa' }),
-
-  plans: (): Promise<LoadPlans> =>
-    postPageData<LoadPlans>({ operation: 'cargar_planes' }),
-
+    postPageData(context, 'cargar_paquetes'),
+  bags: (): Promise<LoadBags> => postPageData(context, 'cargar_bolsas'),
+  bag: (): Promise<LoadBag> => postPageData(context, 'cargar_bolsa'),
+  plans: (): Promise<LoadPlans> => postPageData(context, 'cargar_planes'),
   specialPlans: (): Promise<LoadSpecialPlans> =>
-    postPageData<LoadSpecialPlans>({ operation: 'cargar_planes_especial' }),
-
+    postPageData(context, 'cargar_planes_especial'),
   additionalPlans: (): Promise<LoadAdditionalPlans> =>
-    postPageData<LoadAdditionalPlans>({ operation: 'cargar_planes_adicional' }),
-
+    postPageData(context, 'cargar_planes_adicional'),
   offers: (): Promise<LoadOffersAndPromotions> =>
-    postPageData<LoadOffersAndPromotions>({
-      operation: 'cargar_ofertas_promociones',
-    }),
-
+    postPageData(context, 'cargar_ofertas_promociones'),
   faq: (): Promise<LoadFrequentQuestions> =>
-    postPageData<LoadFrequentQuestions>({
-      operation: 'cargar_preguntas_frecuentes',
-    }),
-};
+    postPageData(context, 'cargar_preguntas_frecuentes'),
+});

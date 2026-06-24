@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { ETECSA, ensureInit } from './methods';
+import type { EtecsaClientContext } from '../client';
 
 /**
  * Error lanzado cuando ocurre un fallo en una llamada a la API de ETECSA.
@@ -24,16 +24,17 @@ export class EtecsaApiError extends Error {
  * lanza una excepción `EtecsaApiError`.
  */
 export const requestEtecsaApi = async <T = unknown>(
+  context: EtecsaClientContext,
   relative: string,
   config: { method?: string; data?: object } = {},
 ): Promise<T> => {
-  await ensureInit();
+  await context.ensureInit();
 
   try {
-    const response: AxiosResponse<T> = await ETECSA.axios({
-      url: ETECSA.href + relative,
+    const response: AxiosResponse<T> = await context.axios({
+      url: context.href + relative,
       method: config.method || 'get',
-      data: config.data && ETECSA.encryptPayload(config.data),
+      data: config.data && context.encryptPayload(config.data),
     });
 
     return response.data;
@@ -42,7 +43,10 @@ export const requestEtecsaApi = async <T = unknown>(
     const status = axiosError.response?.status ?? 500;
     let errorMessage = 'Ocurrió un error al conectar con el servidor';
 
-    if (axiosError.response?.data && typeof axiosError.response.data === 'object') {
+    if (
+      axiosError.response?.data &&
+      typeof axiosError.response.data === 'object'
+    ) {
       const data = axiosError.response.data as Record<string, unknown>;
       if (typeof data.mensaje === 'string') errorMessage = data.mensaje;
       else if (typeof data.error === 'string') errorMessage = data.error;

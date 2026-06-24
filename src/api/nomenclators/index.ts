@@ -1,19 +1,23 @@
+import type { EtecsaClientContext } from '../../client';
 import { requestEtecsaApi } from '../../core/api';
 import {
   MunicipalitiesResponse,
   NautaInterruptionsResponse,
   ProvincesResponse,
-  StbInterruption,
+  StbInterruptionsResponse,
 } from './types';
 
-export const nomenclatorsApi = {
+export const createNomenclatorsApi = (context: EtecsaClientContext) => ({
   provinces: (): Promise<ProvincesResponse> =>
-    requestEtecsaApi<ProvincesResponse>('/nomencladores/nom_provincias_api', {
-      method: 'get',
-    }),
+    requestEtecsaApi<ProvincesResponse>(
+      context,
+      '/nomencladores/nom_provincias_api',
+      { method: 'get' },
+    ),
 
   municipalities: (provinceId: number): Promise<MunicipalitiesResponse> =>
     requestEtecsaApi<MunicipalitiesResponse>(
+      context,
       '/nomencladores/nom_municipios_api',
       {
         method: 'post',
@@ -26,12 +30,15 @@ export const nomenclatorsApi = {
 
   nautaInterruptions: (): Promise<NautaInterruptionsResponse> =>
     requestEtecsaApi<NautaInterruptionsResponse>(
+      context,
       '/nomencladores/nom_interr_nauta_api',
       { method: 'get' },
     ),
 
-  stbInterruptions: (): Promise<StbInterruption> =>
-    requestEtecsaApi<StbInterruption>('/nomencladores/nom_interr_stb_api', {
-      method: 'get',
-    }),
-};
+  stbInterruptions: (): Promise<StbInterruptionsResponse> =>
+    requestEtecsaApi<StbInterruptionsResponse>(
+      context,
+      '/nomencladores/nom_interr_stb_api',
+      { method: 'get' },
+    ),
+});

@@ -1,3 +1,4 @@
+import type { EtecsaClientContext } from '../../client';
 import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
 import {
   CashiersResponse,
@@ -8,6 +9,7 @@ import {
   NautaHogarResponse,
   ProfileData,
 } from './types';
+import { performLogout } from '../logout';
 
 type ProfileRequestOptions = {
   operation?: string;
@@ -16,10 +18,11 @@ type ProfileRequestOptions = {
 };
 
 const profileRequest = async <T>(
+  context: EtecsaClientContext,
   options: ProfileRequestOptions,
 ): Promise<T> => {
   try {
-    const data = await requestEtecsaApi<T>('/usuarios/perfil_api', {
+    const data = await requestEtecsaApi<T>(context, '/usuarios/perfil_api', {
       method: options.method || 'post',
       data:
         options.operation !== undefined
@@ -44,12 +47,12 @@ const profileRequest = async <T>(
   }
 };
 
-export const profileApi = {
+export const createProfileApi = (context: EtecsaClientContext) => ({
   me: (): Promise<ProfileData> =>
-    profileRequest<ProfileData>({ method: 'get' }),
+    profileRequest<ProfileData>(context, { method: 'get' }),
 
   mobileServices: (): Promise<GetMobileServicesResponse> =>
-    profileRequest<GetMobileServicesResponse>({
+    profileRequest<GetMobileServicesResponse>(context, {
       operation: 'get_servicios_moviles',
     }),
 
@@ -58,7 +61,7 @@ export const profileApi = {
    */
   edit: async (data: EditUserRequest): Promise<{ message: string }> => {
     try {
-      await requestEtecsaApi<unknown>('/usuarios/perfil_api', {
+      await requestEtecsaApi<unknown>(context, '/usuarios/perfil_api', {
         method: 'put',
         data: {
           operacion: 'editar_usuario',
@@ -89,22 +92,23 @@ export const profileApi = {
     }
   },
 
-  logout: async (): Promise<{ message: string }> => {
-    await profileRequest<null>({ operation: 'cerrar_session', method: 'put' });
-    return { message: 'Sesión cerrada correctamente' };
-  },
+  logout: () => performLogout(context),
 
   nautaHogar: (): Promise<NautaHogarResponse> =>
-    profileRequest<NautaHogarResponse>({ operation: 'get_nauta_hogar' }),
+    profileRequest<NautaHogarResponse>(context, {
+      operation: 'get_nauta_hogar',
+    }),
 
   cashiersIds: (): Promise<CashiersResponse> =>
-    profileRequest<CashiersResponse>({ operation: 'get_id_cajeros' }),
+    profileRequest<CashiersResponse>(context, { operation: 'get_id_cajeros' }),
 
   ownCard: (): Promise<GetOwnCardResponse> =>
-    profileRequest<GetOwnCardResponse>({ operation: 'get_tarjeta_propia' }),
+    profileRequest<GetOwnCardResponse>(context, {
+      operation: 'get_tarjeta_propia',
+    }),
 
   landlineServices: (): Promise<GetLandlineServicesResponse> =>
-    profileRequest<GetLandlineServicesResponse>({
+    profileRequest<GetLandlineServicesResponse>(context, {
       operation: 'get_servicios_fijos',
     }),
 
@@ -120,7 +124,7 @@ export const profileApi = {
       const data = await requestEtecsaApi<{
         exists?: boolean;
         data?: { post_pago?: boolean };
-      }>('/usuarios/perfil_api', {
+      }>(context, '/usuarios/perfil_api', {
         method: 'post',
         data: {
           operacion: 'verificar_usuario',
@@ -177,6 +181,7 @@ export const profileApi = {
   ): Promise<{ message: string }> => {
     try {
       const data = await requestEtecsaApi<{ exists?: boolean }>(
+        context,
         '/usuarios/perfil_api',
         {
           method: 'post',
@@ -218,6 +223,7 @@ export const profileApi = {
   ): Promise<{ post_pago?: boolean }> => {
     try {
       const data = await requestEtecsaApi<{ data?: { post_pago?: boolean } }>(
+        context,
         '/usuarios/perfil_api',
         {
           method: 'post',
@@ -241,4 +247,4 @@ export const profileApi = {
       throw err;
     }
   },
-};
+});

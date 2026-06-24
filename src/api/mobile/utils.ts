@@ -1,3 +1,4 @@
+import type { EtecsaClientContext } from '../../client';
 import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
 import { MobileServiceRequestOptions } from './types';
 
@@ -5,10 +6,12 @@ import { MobileServiceRequestOptions } from './types';
  * Función auxiliar para peticiones de servicios móviles
  */
 export const mobileServicesRequest = async <T>(
+  context: EtecsaClientContext,
   options: MobileServiceRequestOptions,
 ): Promise<T> => {
   try {
     const data = await requestEtecsaApi<T>(
+      context,
       '/servicios_moviles/servicios_moviles/servicios_moviles_api',
       {
         method: 'post',

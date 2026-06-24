@@ -1,15 +1,21 @@
-import { login } from './login';
-import { sendCode, verifyCode, resetPassword } from './recovery';
-import { profileApi } from '../profile';
-import { clearCookies, loadCookies, saveCookies } from './cookies';
+import type { EtecsaClientContext } from '../../client';
+import { createLogin } from './login';
+import {
+  createSendCode,
+  createVerifyCode,
+  createResetPassword,
+} from './recovery';
+import { saveCookies, loadCookies, clearCookies } from './cookies';
+import { performLogout } from '../logout';
 
-export const authApi = {
-  login,
-  logout: profileApi.logout,
-  sendCode,
-  verifyCode,
-  resetPassword,
-  save: saveCookies,
-  load: loadCookies,
-  clear: clearCookies,
-};
+export const createAuthApi = (context: EtecsaClientContext) => ({
+  login: createLogin(context),
+  logout: () => performLogout(context),
+  sendCode: createSendCode(context),
+  verifyCode: createVerifyCode(context),
+  resetPassword: createResetPassword(context),
+  save: () => saveCookies(context),
+  load: (json: Record<string, import('./cookies').SerializedCookie>) =>
+    loadCookies(context, json),
+  clear: () => clearCookies(context),
+});
