@@ -6,20 +6,12 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-
     "strict": true,
     "skipLibCheck": true,
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-
     "resolveJsonModule": true
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

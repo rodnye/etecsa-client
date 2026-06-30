@@ -1,65 +1,15 @@
 {
   "name": "etecsa-client",
-  "version": "1.0.0",
-  "description": "Unofficial ETECSA API client",
-  "keywords": [
-    "etecsa",
-    "nauta",
-    "cuba",
-    "api",
-    "sdk",
-    "typescript",
-    "nodejs"
-  ],
-  "homepage": "https://github.com/rodnye/etecsa-client",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rodnye/etecsa-client.git"
-  },
-  "bugs": {
-    "url": "https://github.com/rodnye/etecsa-client/issues"
-  },
-  "license": "MIT",
-  "author": "Rodny Estrada<rrodnyestrada1@gmail.com>",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "raw"
-  ],
-  "sideEffects": false,
-  "engines": {
-    "node": ">=18"
-  },
+  "private": true,
+  "description": "Monorepo no oficial para la api de la Tienda ETECSA",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "pnpm run clean && pnpm run build",
-    "format": "prettier --write .",
-    "test": "echo \"No tests yet\""
+    "build": "pnpm -r run build",
+    "clean": "pnpm -r run clean",
+    "format": "prettier --write ."
   },
   "packageManager": "pnpm@10.33.2",
-  "dependencies": {
-    "axios": "^1.16.1",
-    "express": "^5.2.1",
-    "jsdom": "^29.1.1"
-  },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
-    "@types/express": "^5.0.6",
-    "@types/jsdom": "^28.0.3",
-    "@types/node": "^25.7.0",
-    "@types/tough-cookie": "4.0.5",
-    "tsx": "^4.21.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.9.3"
   }
 }
