@@ -1,4 +1,4 @@
-import { UserFormat } from './types';
+import { UserFormat } from './types.ts';
 
 export const PHONE_PATTERN = /^\+53 \d{8}$/;
 export const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

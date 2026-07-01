@@ -1,5 +1,5 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi } from '../../core/api';
+import { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi } from '../../core/api.ts';
 import type {
   LoadHomePageData,
   LoadPackages,
@@ -10,7 +10,7 @@ import type {
   LoadAdditionalPlans,
   LoadOffersAndPromotions,
   LoadFrequentQuestions,
-} from './types';
+} from './types.ts';
 
 const postPageData = async <R = unknown>(
   context: EtecsaClientContext,

@@ -1,6 +1,6 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
-import { detectUserFormat, sanitizeUserFormat } from './utils';
+import type { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi, EtecsaApiError } from '../../core/api.ts';
+import { detectUserFormat, sanitizeUserFormat } from './utils.ts';
 
 /**
  * Generar y enviar código de verificación al usuario.

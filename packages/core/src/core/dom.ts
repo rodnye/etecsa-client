@@ -5,7 +5,7 @@ import { Server } from 'http';
 import { setTimeout } from 'timers/promises';
 import { readFileSync } from 'fs';
 import { DOMWindow } from 'jsdom';
-import { LIB_FOLDER } from '../consts';
+import { LIB_FOLDER } from '../consts.ts';
 import { AddressInfo } from 'node:net';
 
 const RAW_DIR = path.join(LIB_FOLDER, '../raw');

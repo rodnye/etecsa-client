@@ -1,7 +1,7 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
-import { AuthCredentials, LoginSuccessData } from './types';
-import { detectUserFormat, sanitizeUserFormat } from './utils';
+import type { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi, EtecsaApiError } from '../../core/api.ts';
+import { AuthCredentials, LoginSuccessData } from './types.ts';
+import { detectUserFormat, sanitizeUserFormat } from './utils.ts';
 
 /**
  * Iniciar sesión con credenciales de ETECSA

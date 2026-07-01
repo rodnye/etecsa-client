@@ -1,12 +1,12 @@
-import type { EtecsaClientContext } from '../../client';
-import { createLogin } from './login';
+import type { EtecsaClientContext } from '../../client.ts';
+import { createLogin } from './login.ts';
 import {
   createSendCode,
   createVerifyCode,
   createResetPassword,
-} from './recovery';
-import { saveCookies, loadCookies, clearCookies } from './cookies';
-import { performLogout } from '../logout';
+} from './recovery.ts';
+import { saveCookies, loadCookies, clearCookies } from './cookies.ts';
+import { performLogout } from '../logout.ts';
 import { CookieJar } from 'tough-cookie';
 
 export const createAuthApi = (context: EtecsaClientContext) => ({

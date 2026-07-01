@@ -1,5 +1,5 @@
-import { requestEtecsaApi } from '../core/api';
-import type { EtecsaClientContext } from '../client';
+import { requestEtecsaApi } from '../core/api.ts';
+import type { EtecsaClientContext } from '../client.ts';
 
 export const performLogout = async (
   context: EtecsaClientContext,

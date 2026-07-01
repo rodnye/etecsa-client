@@ -1,5 +1,5 @@
 import { CookieJar } from 'tough-cookie';
-import type { EtecsaClientContext } from '../../client';
+import type { EtecsaClientContext } from '../../client.ts';
 
 /**
  * Guarda las cookies actuales como objeto JSON serializable

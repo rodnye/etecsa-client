@@ -1,5 +1,5 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
+import type { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi, EtecsaApiError } from '../../core/api.ts';
 import {
   CashiersResponse,
   EditUserRequest,
@@ -8,8 +8,8 @@ import {
   GetOwnCardResponse,
   NautaHogarResponse,
   ProfileData,
-} from './types';
-import { performLogout } from '../logout';
+} from './types.ts';
+import { performLogout } from '../logout.ts';
 
 type ProfileRequestOptions = {
   operation?: string;

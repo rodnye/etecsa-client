@@ -1,6 +1,6 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi, EtecsaApiError } from '../../core/api';
-import { MobileServiceRequestOptions } from './types';
+import type { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi, EtecsaApiError } from '../../core/api.ts';
+import { MobileServiceRequestOptions } from './types.ts';
 
 /**
  * Función auxiliar para peticiones de servicios móviles

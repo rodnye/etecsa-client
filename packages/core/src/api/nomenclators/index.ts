@@ -1,11 +1,11 @@
-import type { EtecsaClientContext } from '../../client';
-import { requestEtecsaApi } from '../../core/api';
+import type { EtecsaClientContext } from '../../client.ts';
+import { requestEtecsaApi } from '../../core/api.ts';
 import {
   MunicipalitiesResponse,
   NautaInterruptionsResponse,
   ProvincesResponse,
   StbInterruptionsResponse,
-} from './types';
+} from './types.ts';
 
 export const createNomenclatorsApi = (context: EtecsaClientContext) => ({
   provinces: (): Promise<ProvincesResponse> =>

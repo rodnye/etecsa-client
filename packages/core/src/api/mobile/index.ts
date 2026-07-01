@@ -1,5 +1,5 @@
-import type { EtecsaClientContext } from '../../client';
-import { createGetMobileServiceStatus } from './status';
+import type { EtecsaClientContext } from '../../client.ts';
+import { createGetMobileServiceStatus } from './status.ts';
 
 export const createMobileApi = (context: EtecsaClientContext) => ({
   status: createGetMobileServiceStatus(context),

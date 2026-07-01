@@ -1,4 +1,4 @@
-import { loadVirtualDOM } from './core/dom';
+import { loadVirtualDOM } from './core/dom.ts';
 import { AxiosInstance } from 'axios';
 import type { CookieJar } from 'jsdom';
 import { createAuthApi } from './api/auth';

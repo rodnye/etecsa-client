@@ -1,12 +1,12 @@
 import type { CookieJar } from 'jsdom';
-import { loadVirtualDOM } from './dom';
+import { loadVirtualDOM } from './dom.ts';
 import { AxiosStatic } from 'axios';
 import {
   setInitPromise,
   setReady,
   getInitPromise,
   checkReady,
-} from './init-cache';
+} from './init-cache.ts';
 
 export const ETECSA: {
   axios: AxiosStatic;

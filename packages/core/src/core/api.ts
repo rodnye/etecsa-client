@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import type { EtecsaClientContext } from '../client';
+import type { EtecsaClientContext } from '../client.ts';
 
 /**
  * Error lanzado cuando ocurre un fallo en una llamada a la API de ETECSA.
