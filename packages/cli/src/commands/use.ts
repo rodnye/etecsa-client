@@ -1,5 +1,5 @@
 import { select } from '@inquirer/prompts';
-import { store, setActiveUser } from '../session.js';
+import { store, setActiveUser } from '../session.ts';
 import chalk from 'chalk';
 
 export async function useAction(targetUser?: string) {

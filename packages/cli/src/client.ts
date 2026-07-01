@@ -1,5 +1,5 @@
 import { EtecsaClient, EtecsaApiError } from '@rodny/etecsa-core';
-import { getActiveUser, updateUserCookies } from './session.js';
+import { getActiveUser, updateUserCookies } from './session.ts';
 import ora from 'ora';
 import chalk from 'chalk';
 

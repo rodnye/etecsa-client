@@ -1,6 +1,6 @@
-import { withSession } from '../client';
-import { printProfile, extractAndPrintField } from '../ui';
 import chalk from 'chalk';
+import { withSession } from '../client.ts';
+import { printProfile, extractAndPrintField } from '../ui.ts';
 
 export async function profileAction(options: { field?: string }) {
   try {

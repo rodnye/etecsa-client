@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { loginAction } from './commands/login';
-import { useAction } from './commands/use';
-import { statusAction } from './commands/status';
-import { profileAction } from './commands/profile';
-import { store, removeUser } from './session';
+import { loginAction } from './commands/login.ts';
+import { useAction } from './commands/use.ts';
+import { statusAction } from './commands/status.ts';
+import { profileAction } from './commands/profile.ts';
+import { store, removeUser } from './session.ts';
 import { version, description } from '../package.json';
 
 const program = new Command();

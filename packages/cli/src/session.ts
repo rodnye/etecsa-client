@@ -1,5 +1,5 @@
 import Conf from 'conf';
-import { encrypt, decrypt } from './crypto';
+import { encrypt, decrypt } from './crypto.ts';
 import { CookieJar } from 'tough-cookie';
 
 export interface UserConfig {

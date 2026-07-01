@@ -1,8 +1,8 @@
 import { input, password as passwordPrompt } from '@inquirer/prompts';
 import { EtecsaClient } from '@rodny/etecsa-core';
-import { saveUser } from '../session';
 import ora from 'ora';
 import chalk from 'chalk';
+import { saveUser } from '../session.ts';
 
 export async function loginAction(options: { user?: string; pass?: string }) {
   const username =

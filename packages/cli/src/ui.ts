@@ -1,10 +1,6 @@
 import chalk from 'chalk';
 import Table from 'cli-table3';
-import {
-  GetServiceStatusResponse,
-  PrepaidServiceStatus,
-  ProfileData,
-} from '@rodny/etecsa-core';
+import type { GetServiceStatusResponse, ProfileData } from '@rodny/etecsa-core';
 
 export function printMobileStatus(status: GetServiceStatusResponse) {
   const table = new Table({

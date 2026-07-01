@@ -1,5 +1,5 @@
-import { withSession } from '../client.js';
-import { printMobileStatus, extractAndPrintField } from '../ui.js';
+import { withSession } from '../client.ts';
+import { printMobileStatus, extractAndPrintField } from '../ui.ts';
 import chalk from 'chalk';
 
 export async function statusAction(options: { field?: string }) {
