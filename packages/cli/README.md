@@ -1,6 +1,12 @@
-# etecsa-cli
+# @rodny/etecsa-cli
 
-CLI para interactuar con la API de www.tienda.etecsa.cu
+[![npm version](https://img.shields.io/npm/v/@rodny/etecsa-cli.svg?style=for-the-badge)](https://www.npmjs.com/package/@rodny/etecsa-cli)
+
+CLI para interactuar con la API de https://www.tienda.etecsa.cu. Permite consultar saldo de forma remota y datos del estado de tu cuenta en ETECSA.
+
+> [!important]
+> Las consultas de saldo de los planes son independientes de un teléfono móvil, esto quiere decir que no utiliza codigos USSD,
+> todo es directamente consumiendo la API
 
 ## Características
 
@@ -11,7 +17,7 @@ CLI para interactuar con la API de www.tienda.etecsa.cu
 ## Instalación y Uso
 
 ```bash
-npm install --global @rodny/etecsa-cli
+npm install --g @rodny/etecsa-cli
 ```
 
 ```bash
