@@ -23,6 +23,14 @@ Permite autenticación, consulta de servicios móviles, gestión de perfil, nome
 - **TypeScript** – Tipos completos incluidos tanto de las solicitudes como de las respuestas.
 - **Múltiples instancias** – Soporta múltiples clientes independientes con sus propias sesiones.
 
+> [!important]
+> Las consultas de saldo de los planes son independientes de un teléfono móvil, esto quiere decir que no utiliza codigos USSD,
+> todo es directamente consumiendo la API
+
+> [!warn]
+> Por favor no abusar del servicio! Esto es un método no oficial y el uso excesivo (por ejemplo, más de 30 solicitudes por segundo)
+> puede traer el baneo temporal de la cuenta por detección de spam (se desconoce los métodos de detección de bots que se utiliza, mejor precaver).
+
 ## 🚀 Uso rápido
 
 ```typescript
