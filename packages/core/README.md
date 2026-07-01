@@ -5,6 +5,7 @@ Esto elimina completamente las abstracciones y encriptados de los endpoints del 
 
 Permite autenticación, consulta de servicios móviles, gestión de perfil, nomencladores y más.
 
+[![npm version](https://img.shields.io/npm/v/@rodny/etecsa-core.svg?style=for-the-badge)](https://www.npmjs.com/package/@rodny/etecsa-core)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
