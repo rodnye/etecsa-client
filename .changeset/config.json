@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["@rodny/etecsa-core", "etecsa-cli"]],
+  "linked": [["@rodny/etecsa-core", "@rodny/etecsa-cli"]],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

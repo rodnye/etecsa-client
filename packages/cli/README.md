@@ -11,7 +11,7 @@ CLI para interactuar con la API de www.tienda.etecsa.cu
 ## Instalación y Uso
 
 ```bash
-npm install --global etecsa-cli
+npm install --global @rodny/etecsa-cli
 ```
 
 ```bash
