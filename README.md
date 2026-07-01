@@ -34,6 +34,16 @@ pnpm dev:cli login -u tu_usuario -p tu_contraseña
 pnpm dev:cli status
 ```
 
+4. Otros comandos para desarrollo
+
+```bash
+# dar formato con prettier
+pnpm format
+
+# publicar a npm todos los paquetes (usa changesets)
+pnpm release
+```
+
 ## 📂 Estructura
 
 ```
