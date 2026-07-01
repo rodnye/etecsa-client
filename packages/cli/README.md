@@ -8,7 +8,7 @@ CLI para interactuar con la API de https://www.tienda.etecsa.cu. Permite consult
 > Las consultas de saldo de los planes son independientes de un teléfono móvil, esto quiere decir que no utiliza codigos USSD,
 > todo es directamente consumiendo la API
 
-> [!warn]
+> [!warning]
 > Por favor no abusar del servicio! Esto es un método no oficial y el uso excesivo (por ejemplo, más de 30 solicitudes por segundo)
 > puede traer el baneo temporal de la cuenta por detección de spam (se desconoce los métodos de detección de bots que se utiliza, mejor precaver).
 
