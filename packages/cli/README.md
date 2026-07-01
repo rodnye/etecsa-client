@@ -1,4 +1,4 @@
-# @rodny/etecsa-cli
+# etecsa-cli
 
 CLI para interactuar con la API de www.tienda.etecsa.cu
 
@@ -11,11 +11,11 @@ CLI para interactuar con la API de www.tienda.etecsa.cu
 ## Instalación y Uso
 
 ```bash
-npm i -g @rodny/etecsa-cli
+npm install --global etecsa-cli
 ```
 
 ```bash
-# 1. Iniciar sesión 
+# 1. Iniciar sesión
 etecsa login
 
 # 2. Consultar saldo y paquetes

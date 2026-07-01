@@ -1,5 +1,5 @@
 {
-  "name": "@rodny/etecsa-cli",
+  "name": "etecsa-cli",
   "version": "1.0.0",
   "description": "CLI para visualizar el estado de cuentas de www.tienda.etecsa.cu",
   "type": "module",

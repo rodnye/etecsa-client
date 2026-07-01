@@ -10,10 +10,7 @@ import { version, description } from '../package.json';
 
 const program = new Command();
 
-program
-  .name('etecsa')
-  .description(description)
-  .version(version);
+program.name('etecsa').description(description).version(version);
 
 program
   .command('login')
