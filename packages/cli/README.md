@@ -21,7 +21,7 @@ CLI para interactuar con la API de https://www.tienda.etecsa.cu. Permite consult
 ## Instalación y Uso
 
 ```bash
-npm install --g @rodny/etecsa-cli
+npm install -g @rodny/etecsa-cli
 ```
 
 ```bash
