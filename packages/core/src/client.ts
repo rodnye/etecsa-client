@@ -1,11 +1,11 @@
 import { loadVirtualDOM } from './core/dom.ts';
 import { AxiosInstance } from 'axios';
 import type { CookieJar } from 'jsdom';
-import { createAuthApi } from './api/auth';
-import { createProfileApi } from './api/profile';
-import { createMobileApi } from './api/mobile';
-import { createNomenclatorsApi } from './api/nomenclators';
-import { createPageApi } from './api/page';
+import { createAuthApi } from './api/auth/index.ts';
+import { createProfileApi } from './api/profile/index.ts';
+import { createMobileApi } from './api/mobile/index.ts';
+import { createNomenclatorsApi } from './api/nomenclators/index.ts';
+import { createPageApi } from './api/page/index.ts';
 
 export interface EtecsaClientContext {
   axios: AxiosInstance;

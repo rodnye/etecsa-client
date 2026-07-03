@@ -1,6 +1,6 @@
 import type { EtecsaClientContext } from '../../client.ts';
 import { EtecsaApiError } from '../../core/api.ts';
-import { createProfileApi } from '../profile';
+import { createProfileApi } from '../profile/index.ts';
 import { GetServiceStatusRequest, GetServiceStatusResponse } from './types.ts';
 import { mobileServicesRequest } from './utils.ts';
 
