@@ -6,7 +6,7 @@ import { useAction } from './commands/use.ts';
 import { statusAction } from './commands/status.ts';
 import { profileAction } from './commands/profile.ts';
 import { store, removeUser } from './session.ts';
-import { version, description } from '../package.json' with { type: 'json' };
+import { version, description } from '../package.json';
 
 const program = new Command();
 

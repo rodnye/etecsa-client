@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "tsx src/index.ts",
-    "build": "tsc",
+    "build": "tsup-node src/index.ts",
     "clean": "rm -rf dist",
     "prepublishOnly": "pnpm run clean && pnpm run build"
   },
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.4",
+    "tsup": "^8.5.1",
     "tsx": "^4.22.4",
     "typescript": "^5.9.3"
   }
