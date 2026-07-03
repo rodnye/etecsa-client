@@ -11,7 +11,7 @@
     "typescript",
     "nodejs"
   ],
-  "homepage": "https://github.com/rodnye/etecsa-client",
+  "homepage": "https://github.com/rodnye/etecsa-client/blob/main/packages/core#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rodnye/etecsa-client.git"
