@@ -6,7 +6,12 @@ import { useAction } from './commands/use.ts';
 import { statusAction } from './commands/status.ts';
 import { profileAction } from './commands/profile.ts';
 import { store, removeUser } from './session.ts';
-import { version, description } from '../package.json' with { type: 'json' };
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const { version, description } = JSON.parse(
+  readFileSync(path.join(import.meta.dirname, '../package.json'), 'utf8'),
+);
 
 const program = new Command();
 
