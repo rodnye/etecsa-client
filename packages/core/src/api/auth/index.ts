@@ -7,6 +7,7 @@ import {
 } from './recovery';
 import { saveCookies, loadCookies, clearCookies } from './cookies';
 import { performLogout } from '../logout';
+import { CookieJar } from 'tough-cookie';
 
 export const createAuthApi = (context: EtecsaClientContext) => ({
   login: createLogin(context),
@@ -15,7 +16,7 @@ export const createAuthApi = (context: EtecsaClientContext) => ({
   verifyCode: createVerifyCode(context),
   resetPassword: createResetPassword(context),
   save: () => saveCookies(context),
-  load: (json: Record<string, import('./cookies').SerializedCookie>) =>
+  load: (json: CookieJar.Serialized) =>
     loadCookies(context, json),
   clear: () => clearCookies(context),
 });
