@@ -16,7 +16,6 @@ export const createAuthApi = (context: EtecsaClientContext) => ({
   verifyCode: createVerifyCode(context),
   resetPassword: createResetPassword(context),
   save: () => saveCookies(context),
-  load: (json: CookieJar.Serialized) =>
-    loadCookies(context, json),
+  load: (json: CookieJar.Serialized) => loadCookies(context, json),
   clear: () => clearCookies(context),
 });

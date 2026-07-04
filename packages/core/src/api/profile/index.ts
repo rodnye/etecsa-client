@@ -73,10 +73,7 @@ export const createProfileApi = (context: EtecsaClientContext) => ({
       if (err instanceof EtecsaApiError && err.status === 226) {
         const errorMessage = err.details as string;
         let errorKey:
-          | 'carnet'
-          | 'carnet_con_movil'
-          | 'carnet_con_correo'
-          | undefined;
+          'carnet' | 'carnet_con_movil' | 'carnet_con_correo' | undefined;
         if (errorMessage === 'carnet') errorKey = 'carnet';
         else if (errorMessage === 'carnet_con_movil')
           errorKey = 'carnet_con_movil';

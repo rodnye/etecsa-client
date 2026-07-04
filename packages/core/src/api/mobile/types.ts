@@ -85,9 +85,7 @@ export interface SimDataServiceStatus {
 }
 
 export type GetServiceStatusResponse =
-  | PrepaidServiceStatus
-  | PostpaidServiceStatus
-  | SimDataServiceStatus;
+  PrepaidServiceStatus | PostpaidServiceStatus | SimDataServiceStatus;
 
 export type MobileServiceRequestOptions = {
   operation: string;
